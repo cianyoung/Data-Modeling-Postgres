@@ -132,7 +132,17 @@ key referenced from the Fact table.
 ```
 7. The last step is inserting everything into the `songplay` fact table
 
+## Project checklist
 
+  - [x] Table creation script (`create_table.py`) runs without errors
+  - [x] Fact and dimensional tables for a star schema are properly defined
+  - [x] ETL script (`etl.py`) runs without errors
+  - [x] ETL script properly processes transformations in Python 
+  - [x] The project shows proper use of documentation
+  - [x] The project code is clean and modular
+  - [ ] (BONUS) Insert data using the COPY command to bulk insert log files instead of using INSERT on one row at a time
+  - [ ] (BONUS) Add data quality checks
+  - [ ] (BONUS) Create a dashboard for analytic queries on your new database
 
 
 
