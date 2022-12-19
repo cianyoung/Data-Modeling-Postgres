@@ -97,7 +97,40 @@ key referenced from the Fact table.
 
 1. Write DROP, CREATE, INSERTS statements in `sql_queries.py`
 2. Run `create_tables.py` to create database and tables
+3. Use `test.ipynb` to confirm creation of tables with the correct columns
+4. Complete `etl.py` script using completed code in `etl.ipynb` as a base
+5. Run `etl.py` to verify ETL logic is work as expected
 
+## ETL Pipeline Summary
+
+1. Connect to the Sparkify database
+2. Cycle through files under `/data/song_data`, and for each file, send to the function named `process_song_file`
+3. This function loads each song file into a dataframe and selects only the fields required to generate the table before insertion. Example:
+```commandline
+    song_data = df[["song_id", "title", "artist_id", "year", "duration"]].values[0].tolist()
+```
+```commandline
+    artist_data = df[["artist_id", "artist_name", "artist_location", "artist_latitude", "artist_longitude"]].values[0].tolist()
+```
+4. Cycle through files under `/data/log_data`, and for each file, send to the function named `process_log_file`
+5. This function loads each file where `page = NextSong` into a dataframe and selects only the fields required to generate the tables before insertion
+   1. Notably the `ts` attribute is converted from Unix time to timestamp. Then this is used as the `start_time` field in the `time_data` and all additional fields are generated using the `datetime` library
+```commandline
+    time_df = ['timestamp', 'hour', 'day', 'week_of_year', 'month', 'year', 'weekday']
+```
+```commandline
+    user_df = ['userId', 'firstName', 'lastName', 'gender', 'level']
+```
+6. Lookup the `songId` and `artistId` from their respective tables by song name, artist name, and song duration in order to complete the `songplay` fact table using the following query
+```commandline
+    song_select = ("SELECT SONGS.song_id, ARTISTS.artist_id from SONGS JOIN ARTISTS ON SONGS.artist_id = ARTISTS.artist_id \
+                WHERE \
+                SONGS.title = %s \
+                AND ARTISTS.name = %s \
+                AND SONGS.duration = %s \
+                ")
+```
+7. The last step is inserting everything into the `songplay` fact table
 
 
 
