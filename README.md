@@ -1,6 +1,6 @@
 # Data-Modeling-Postgres
 
-First project submission for Udacity Data Engineering Nanodegree. Project consists of two parts:
+First project submission for based on Udacity's Data Engineering Nanodegree. Project consists of two parts:
 
 1. Data model and the creation of star schema database with Postgres (using the `psycopg2` Python driver)
 2. Build an ETL pipeline using Python
@@ -83,8 +83,20 @@ key referenced from the Fact table.
 
 ## Project Structure
 
-Files used on the project
+#### Files used on the project
 
+1. **data** folder nested at the home of the project
+2. **sql_queries.py** contains SQL queries needed to initiate the tables, and is imported into the files below
+3. **create_tables.py** drops and creates tables. This file is run to reset tables each time before the ETL scripts are run
+4. **test.ipynb** displays the first few rows of each table to inspect the database
+5. **etl.ipynb** reads and processes a single file from song_data and log_data and loads the data into tables
+6. **etl.py** reads and processes all files from song_data and log_data and loads them into your tables.
+7. **README.md** current file, provides overview of the project.
+
+#### Step by step overview
+
+1. Write DROP, CREATE, INSERTS statements in `sql_queries.py`
+2. Run `create_tables.py` to create database and tables
 
 
 
