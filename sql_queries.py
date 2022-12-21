@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS songplays (
     start_time timestamp NOT NULL REFERENCES time(start_time),
     user_id varchar  NOT NULL REFERENCES users(user_id),
     level varchar NOT NULL,
-    song_id varchar NOT NULL REFERENCES songs(song_id),
-    artist_id varchar NOT NULL REFERENCES artists(artist_id),
+    song_id varchar REFERENCES songs(song_id),
+    artist_id varchar REFERENCES artists(artist_id),
     session_id int NOT NULL,
     location text,
     user_agent text
