@@ -41,7 +41,7 @@ def process_log_file(cur, filepath):
     # insert time data records
     time_data = list(zip(timestamp, hour, day, week_of_year, month, year, weekday))
     column_labels = ['timestamp', 'hour', 'day', 'week_of_year', 'month', 'year', 'weekday']
-    time_df = pd.DataFrame(time_data, columns=column_labels)
+    time_df = pd.DataFrame(time_data, columns = column_labels)
     time_df['timestamp'] = time_df['timestamp'].apply(pd.to_datetime)
 
     for i, row in time_df.iterrows():
@@ -69,7 +69,7 @@ def process_log_file(cur, filepath):
         # insert songplay record
         songplay_data = (pd.to_datetime(row.ts, unit='ms'), int(row.userId), row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
     cur.execute(songplay_table_insert, songplay_data)
-    # needs work
+
 
 def process_data(cur, conn, filepath, func):
     """function passes all the files under a filepath to given function as argument and executes the given function."""

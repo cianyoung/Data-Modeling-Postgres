@@ -1,3 +1,7 @@
+"""
+Module contains string constants which contain SQL scripts for creating and dropping tables as well as inserting data into tables
+"""
+
 # DROP TABLES
 
 songplay_table_drop = "DROP table IF EXISTS songplays;"
@@ -9,54 +13,59 @@ time_table_drop = "DROP table IF EXISTS time;"
 # CREATE TABLES
 
 songplay_table_create = ("""
-    CREATE TABLE IF NOT EXISTS songplays (
+CREATE TABLE IF NOT EXISTS songplays (
     songplay_id SERIAL PRIMARY KEY,
-    start_time timestamp REFERENCES time,
-    user_id varchar REFERENCES users,
-    level varchar,
-    song_id varchar REFERENCES songs,
-    artist_id varchar REFERENCES artists,
-    session_id int,
+    start_time timestamp NOT NULL REFERENCES time(start_time),
+    user_id varchar  NOT NULL REFERENCES users(user_id),
+    level varchar NOT NULL,
+    song_id varchar NOT NULL REFERENCES songs(song_id),
+    artist_id varchar NOT NULL REFERENCES artists(artist_id),
+    session_id int NOT NULL,
     location text,
-    user_agent text );
+    user_agent text
+);
 """)
 
 user_table_create = ("""
-    CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS users (
     user_id varchar PRIMARY KEY,
-    first_name varchar,
-    last_name varchar,
+    first_name varchar NOT NULL,
+    last_name varchar NOT NULL,
     gender varchar,
-    level varchar );
+    level varchar NOT NULL
+);
 """)
 
 artist_table_create = ("""
-    CREATE TABLE IF NOT EXISTS artists (
+CREATE TABLE IF NOT EXISTS artists (
     artist_id varchar PRIMARY KEY,
-    name varchar,
+    name varchar NOT NULL,
     location varchar,
     latitude numeric,
-    longitude numeric );
+    longitude numeric
+);
 """)
 
 time_table_create = ("""
     CREATE TABLE IF NOT EXISTS time (
     start_time timestamp PRIMARY KEY,
-    hour int,
-    day int,
-    week int,
-    month int,
-    year int,
-    weekday int );
+    hour int NOT NULL,
+    day int NOT NULL,
+    week int NOT NULL,
+    month int NOT NULL,
+    year int NOT NULL,
+    weekday int NOT NULL
+);
 """)
 
 song_table_create = ("""
-    CREATE TABLE IF NOT EXISTS songs (
+CREATE TABLE IF NOT EXISTS songs (
     song_id varchar PRIMARY KEY,
-    title varchar,
-    artist_id varchar,
-    year int,
-    duration numeric );
+    title varchar NOT NULL,
+    artist_id varchar NOT NULL,
+    year int NOT NULL,
+    duration numeric NOT NULL
+);
 """)
 
 # INSERT RECORDS
