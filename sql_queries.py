@@ -16,7 +16,7 @@ songplay_table_create = ("""
 CREATE TABLE IF NOT EXISTS songplays (
     songplay_id SERIAL PRIMARY KEY,
     start_time timestamp NOT NULL REFERENCES time(start_time),
-    user_id varchar  NOT NULL REFERENCES users(user_id),
+    user_id INT  NOT NULL REFERENCES users(user_id),
     level varchar NOT NULL,
     song_id varchar REFERENCES songs(song_id),
     artist_id varchar REFERENCES artists(artist_id),
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS songplays (
 
 user_table_create = ("""
 CREATE TABLE IF NOT EXISTS users (
-    user_id varchar PRIMARY KEY,
+    user_id INT PRIMARY KEY,
     first_name varchar NOT NULL,
     last_name varchar NOT NULL,
     gender varchar,
@@ -77,17 +77,32 @@ songplay_table_insert = ("""
 
 user_table_insert = ("""
     INSERT INTO users (user_id, first_name, last_name, gender, level)
-    VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING
+    VALUES (%s, %s, %s, %s, %s) ON CONFLICT (user_id) DO
+        UPDATE SET
+        first_name = EXCLUDED.first_name,
+        last_name = EXCLUDED.last_name,
+        gender = EXCLUDED.gender,
+        level = EXCLUDED.level
 """)
 
 song_table_insert = ("""
     INSERT INTO songs (song_id, title, artist_id, year, duration) 
-    VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING
+    VALUES (%s, %s, %s, %s, %s) ON CONFLICT (song_id) DO
+        UPDATE SET
+        title = EXCLUDED.title,
+        artist_id = EXCLUDED.artist_id,
+        year = EXCLUDED.year,
+        duration = EXCLUDED.duration
 """)
 
 artist_table_insert = ("""
     INSERT INTO artists (artist_id, name, location, latitude, longitude)
-    VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING
+    VALUES (%s, %s, %s, %s, %s) ON CONFLICT (artist_id) DO
+        UPDATE SET
+        name = EXCLUDED.name,
+        location = EXCLUDED.location,
+        latitude = EXCLUDED.latitude,
+        longitude = EXCLUDED.longitude
 """)
 
 time_table_insert = ("""
