@@ -1,6 +1,6 @@
 # Data-Modeling-Postgres
 
-First project submission for based on Udacity's Data Engineering Nanodegree. Project consists of two parts:
+Project consists of two parts:
 
 1. Data model and the creation of star schema database with Postgres (using the `psycopg2` Python driver)
 2. Build an ETL pipeline using Python
